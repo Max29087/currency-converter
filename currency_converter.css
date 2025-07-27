@@ -71,7 +71,8 @@ form input {
 
 .msg {
     margin: 2rem 0 2rem;
-
+    text-align: center;
+    font-size: 1.20rem;
 }
 
 form button {
@@ -81,6 +82,7 @@ form button {
     font-size: 1.15rem;
     cursor: pointer;
 }
-#option11{
+
+#option11 {
     cursor: pointer;
 }

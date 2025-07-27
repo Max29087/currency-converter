@@ -30,35 +30,7 @@ const updateFlag = (element) => {
     img.src = newSrc;
 };
 
-// // Main Exchange Rate button click
-// btn.addEventListener("click", async (evt) => {
-//     evt.preventDefault();
-//     let amount = document.querySelector(".amount input");
-//     let amountVal = amount.value;
-
-//     if (amountVal === "" || amountVal <= 0) {
-//         amountVal = 1;
-//         amount.value = 1;
-//     }
-
-//     const URL = `https://api.exchangerate.host/convert?from=${fromCurr.value}&to=${toCurr.value}&amount=${amountVal}`;
-
-//     try {
-//         let response = await fetch(URL);
-//         let data = await response.json();
-
-//         if (data && data.result !== undefined) {
-//             let convertedAmount = data.result.toFixed(2);
-//             document.querySelector(".msg").innerText =
-//                 `${amountVal} ${fromCurr.value} = ${convertedAmount} ${toCurr.value}`;
-//         } else {
-//             document.querySelector(".msg").innerText = "Something went wrong. 😢";
-//         }
-//     } catch (error) {
-//         console.error("Error fetching API:", error);
-//         document.querySelector(".msg").innerText = "Something went wrong. 😢";
-//     }
-// });
+// ✅ Using ExchangeRate-API
 btn.addEventListener("click", async (evt) => {
     evt.preventDefault();
     let amount = document.querySelector(".amount input");
@@ -69,15 +41,17 @@ btn.addEventListener("click", async (evt) => {
         amount.value = 1;
     }
 
-    const URL = `https://api.exchangerate.host/convert?from=${fromCurr.value}&to=${toCurr.value}&amount=${amountVal}`;
+    const API_KEY = "e885160b504b3fb562238c3b";
+    const URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${fromCurr.value}`;
 
     try {
         let response = await fetch(URL);
         let data = await response.json();
-        console.log("API response:", data);
+        console.log("API Response:", data);
 
-        if (data && data.result !== undefined) {
-            let convertedAmount = data.result.toFixed(2);
+        if (data && data.result === "success") {
+            let rate = data.conversion_rates[toCurr.value];
+            let convertedAmount = (amountVal * rate).toFixed(2);
             document.querySelector(".msg").innerText =
                 `${amountVal} ${fromCurr.value} = ${convertedAmount} ${toCurr.value}`;
         } else {
